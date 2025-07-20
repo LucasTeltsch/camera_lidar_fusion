@@ -57,5 +57,14 @@ This repository contains code developed as part of a bachelor thesis on multi-se
         └── launch.py                           # Entry point for launching all nodes
 ```
 
+## Usage
+```
+source /opt/ros/galactic/setup.bash
+colcon build
+source install/setup.bash
+
+ros2 launch launch_fusion launch.py
+```
+
 # Installation
 Please refer to [Installation](INSTALL.md) for installation instructions.
