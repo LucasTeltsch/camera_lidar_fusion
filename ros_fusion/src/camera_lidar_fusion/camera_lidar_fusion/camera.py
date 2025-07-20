@@ -22,7 +22,7 @@ class Camera:
             prog="Dalsa Camera Display", description="Shows dalsa camera live stream."
         )
         parser.add_argument(
-            "-c", "--config", default="config.yaml", help="load config file"
+            "-c", "--config", default="./config.yaml", help="load config file"
         )
         args = parser.parse_args(filtered_args[1:])
         config = DotMap(self.loadConfig(args.config))

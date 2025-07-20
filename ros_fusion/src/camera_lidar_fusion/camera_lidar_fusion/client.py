@@ -84,7 +84,7 @@ class FusionClient(Node):
 
     def get_detector_config(self):
         # Set configurations for YOLO and CenterPoint
-        yolo_config = "yolo_config/yolo11n.pt"  # Path to your YOLOv11 model
+        yolo_config = "src/camera_lidar_fusion/camera_lidar_fusion/yolo_config/yolo11n.pt"  # Path to your YOLOv11 model
         mmlab_config = {
             "config_file": "src/camera_lidar_fusion/camera_lidar_fusion/lidar_config/configs/pointpillars/pointpillars_hv_secfpn_sbn-all_8xb2-amp-2x_nus-3d.py",  
             "checkpoint_file": "src/camera_lidar_fusion/camera_lidar_fusion/lidar_config/checkpoints/pointpillars/hv_pointpillars_secfpn_sbn-all_fp16_2x8_2x_nus-3d_20201020_222626-c3f0483e.pth", 
