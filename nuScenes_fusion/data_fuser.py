@@ -120,6 +120,7 @@ class DataFuser:
         advance_once = False
 
         start_time = 0
+        processed_frames = 0
 
         if ground_truth:
             avg_iou_before = []
@@ -307,8 +308,10 @@ class DataFuser:
                     f"[DataFuser] FPS for data fusion: {1 / (time.time() - start_time):.2f}"
                 )
 
+            processed_frames += 1
+
         print(
-            f"[DataFuser] Average FPS for data fusion: {1 / (time.time() - start_time):.2f}"
+            f"[DataFuser] Average FPS for data fusion: {processed_frames / (time.time() - start_time):.2f}"
         )
 
         if ground_truth:
