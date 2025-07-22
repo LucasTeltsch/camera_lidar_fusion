@@ -79,11 +79,12 @@ class LidarPublisher(Node):
         self.elapsed_time += frame_duration
         self.frame_count += 1
 
-        # Publish the latest scan if available
+        lidar_data = LidarData()
+
         with self.scan_lock:
             if self.latest_scan is not None:
-                scan = self.serialize_scan(self.latest_scan)
-                self.publisher.publish(scan)
+                lidar_data.xyz_points = self.latest_scan.ravel().tolist()
+                self.publisher.publish(lidar_data)
                 self.get_logger().info("Publishing lidar data...")
 
         # Calculate average FPS every 10 frames
@@ -99,16 +100,6 @@ class LidarPublisher(Node):
 
         # Update time for FPS calculation
         self.time_past = current_time
-
-    def serialize_scan(self, scan: LidarScan):
-        """Serialize the scan data to LidarData message format"""
-        range_data = scan.field("RANGE").astype(np.uint32).ravel().tolist()
-        
-        lidar_data = LidarData()
-        lidar_data.range_data = range_data
-
-        return lidar_data
-
 
 def main(args=None):
     rclpy.init(args=args)
