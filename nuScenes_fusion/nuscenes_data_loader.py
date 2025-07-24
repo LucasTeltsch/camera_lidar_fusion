@@ -22,8 +22,8 @@ class NuScenesDataLoader:
         self.nusc = nusc
 
         self.count = 0
-        # self.max_samples = len(self.nusc.sample)
-        self.max_samples = 15
+        self.max_samples = len(self.nusc.sample)
+        # self.max_samples = 15
 
     def load_new_data(self, sync_data_queue: Queue):
         """

@@ -119,7 +119,7 @@ class DataFuser:
         paused = False
         advance_once = False
 
-        start_time = 0
+        global_start_time = time.time()
         processed_frames = 0
 
         if ground_truth:
@@ -311,7 +311,7 @@ class DataFuser:
             processed_frames += 1
 
         print(
-            f"[DataFuser] Average FPS for data fusion: {processed_frames / (time.time() - start_time):.2f}"
+            f"[DataFuser] Average FPS for data fusion: {processed_frames / (time.time() - global_start_time):.2f}"
         )
 
         if ground_truth:
