@@ -170,12 +170,11 @@ def project_3d_bb_to_image(
             - "score" (float): The confidence score of the detection.
     """
     projected_boxes = []
-
+    
     for bbox, label, score in zip(bounding_boxes, labels, scores):
         if score < 0.3:
             continue
-        # Skip Traffic Cone and Barrier classes
-        if label == 8 or label == 9:
+        if label == 'traffic_cone' or label == 'barrier':
             continue
 
         x, y, z, dx, dy, dz, yaw = bbox[:7]

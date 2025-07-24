@@ -15,6 +15,10 @@ def get_detector_config():
         "config_file": "lidar_config/configs/pointpillars/pointpillars_hv_secfpn_sbn-all_8xb2-amp-2x_nus-3d.py",
         "checkpoint_file": "lidar_config/checkpoints/pointpillars/hv_pointpillars_secfpn_sbn-all_fp16_2x8_2x_nus-3d_20201020_222626-c3f0483e.pth",
     }
+    # mmlab_config = {
+    #     "config_file": "lidar_config/configs/centerpoint/centerpoint_voxel01_second_secfpn_head-circlenms_8xb4-cyclic-20e_nus-3d.py",
+    #     "checkpoint_file": "lidar_config/checkpoints/centerpoint/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus_20220810_030004-9061688e.pth",
+    # }  
     return yolo_config, mmlab_config
 
 
