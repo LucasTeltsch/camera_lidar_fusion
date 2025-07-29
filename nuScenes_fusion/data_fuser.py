@@ -157,32 +157,31 @@ class DataFuser:
 
                 projected_boxes = self.project_3d_bb_to_image(pc_results)
 
+                if ground_truth:
+                    gt_boxes = get_ground_truth_boxes(
+                        nusc,
+                        sample,
+                        self.T_lidar_to_cam,
+                        self.cam_intrinsics,
+                        self.image_size,
+                    )
+
+                    if draw_gt_boxes:
+                        draw_3d_bounding_boxes(
+                            image, color_map, nuscenes_labels, gt_boxes
+                        )
+
+                    avg_iou, _, _, _ = evaluate_detection(
+                        img_results, projected_boxes, gt_boxes
+                    )
+
+                    avg_iou_before.append(avg_iou)
+
+                    print(
+                        f"Average ground truth IoU score for 3d boxes BEFORE fusion: {avg_iou:.2f}"
+                    )
+
                 if compute_average or average_only or display_highest_certainty:
-
-                    if ground_truth:
-                        gt_boxes = get_ground_truth_boxes(
-                            nusc,
-                            sample,
-                            self.T_lidar_to_cam,
-                            self.cam_intrinsics,
-                            self.image_size,
-                        )
-
-                        if draw_gt_boxes:
-                            draw_3d_bounding_boxes(
-                                image, color_map, nuscenes_labels, gt_boxes
-                            )
-
-                        avg_iou, _, _, _ = evaluate_detection(
-                            img_results, projected_boxes, gt_boxes
-                        )
-
-                        avg_iou_before.append(avg_iou)
-
-                        print(
-                            f"Average ground truth IoU score for 3d boxes BEFORE fusion: {avg_iou:.2f}"
-                        )
-
                     (
                         matches,
                         matched_lid_indices,
