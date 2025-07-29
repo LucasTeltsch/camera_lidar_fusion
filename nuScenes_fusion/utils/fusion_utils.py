@@ -363,14 +363,6 @@ def evaluate_detection(boxes_2d, boxes_3d, gt_boxes, iou_threshold=0.5):
 
     iou_scores = []
 
-    # Prepare 2D detections (append dummy IoU placeholder)
-    new_boxes_2d = [box_2d + [0.0] for box_2d in boxes_2d]
-
-    # Prepare 3D detections
-    new_boxes_3d = boxes_3d.copy()
-    for box_3d in new_boxes_3d:
-        box_3d["gt_score"] = 0.0
-
     # Collect all valid (IoU >= threshold and class match) detection-GT pairs
     matches = []  # (iou, gt_idx, pred_id, is_3d)
 
@@ -380,8 +372,8 @@ def evaluate_detection(boxes_2d, boxes_3d, gt_boxes, iou_threshold=0.5):
         gt_label = gt_box["label"]
 
         # Compare with 2D detections
-        for pred_idx, box_2d in enumerate(new_boxes_2d):
-            xmin, ymin, xmax, ymax, score, pred_label, _ = box_2d
+        for pred_idx, box_2d in enumerate(boxes_2d):
+            xmin, ymin, xmax, ymax, score, pred_label = box_2d
             pred_bbox = [xmin, ymin, xmax, ymax]
 
             if pred_label in gt_label:
@@ -390,7 +382,7 @@ def evaluate_detection(boxes_2d, boxes_3d, gt_boxes, iou_threshold=0.5):
                     matches.append((iou, gt_idx, f"2d_{pred_idx}", False))
 
         # Compare with 3D detections (via 2D projection)
-        for pred_idx, box_3d in enumerate(new_boxes_3d):
+        for pred_idx, box_3d in enumerate(boxes_3d):
             pred_corners = box_3d["corners"]
             pred_bbox = get_2d_bbox_from_corners(pred_corners)
             pred_label = box_3d["label"]
@@ -413,7 +405,7 @@ def evaluate_detection(boxes_2d, boxes_3d, gt_boxes, iou_threshold=0.5):
             iou_scores.append(iou)
 
     tp = len(matched_preds)
-    fp = len(new_boxes_2d) + len(new_boxes_3d) - tp
+    fp = len(boxes_2d) + len(boxes_3d) - tp
     fn = len(gt_boxes) - len(matched_gt)
 
     avg_iou = np.mean(iou_scores) if iou_scores else 0
